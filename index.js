@@ -11,11 +11,11 @@ const PORT = process.env.PORT ?? 3000;
 const mongoURL = process.env.MONGO_URL;
 
 
-const corsOptions = { 
-   origin: 'http://localhost:3000',
-   credentials: true, 
-   optionSuccessStatus: 200
- }
+// const corsOptions = { 
+//    origin: 'http://localhost:3000',
+//    credentials: true, 
+//    optionSuccessStatus: 200
+//  }
 
 try { 
 mongoose.set('strictQuery' , true);
@@ -23,7 +23,9 @@ mongoose.connect(mongoURL)
    .then(()=> console.log(`Your db connect`))
    .catch((er)=> console.log(er , `Your db have error: ${er}`))
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
+
 app.use(express.json());
 // app.use('/uploads' , express.static('uploads'))
 
