@@ -37,7 +37,8 @@ export const createProduct = async (req, res)=>{
          description: req.body.description, 
          imgUrl: req.body.imgUrl, 
          parent: req.body.parent,
-         price: req.body.price
+         price: req.body.price, 
+         filling: req.body.filling
       });
       const product = await data.save();
       res.json(product)
@@ -50,11 +51,38 @@ export const createProduct = async (req, res)=>{
 }
 
 
-export const getOneProduct = async (req, res)=>{ 
+export const getOneCakes = async (req, res)=>{ 
    try { 
       const productTitle = req.params.title;
       ProductModel.findOneAndUpdate(
-         { title: productTitle }, 
+         { title: productTitle , parent: "cakes"}, 
+         { $inc: { vievsCount: 1}},
+         {returnDocument : 'after'},
+         (err , doc)=>{ 
+            if (err) { 
+               return res.status(500).json({ 
+                  message: 'Не получилось получить данные о товаре'
+               })
+            } 
+            if (!doc) { 
+               return res.status(404).json({ 
+                  message: 'Данного товара почему то нет'
+               })
+            }
+            return res.status(200).json(doc)
+         }
+         )
+   } catch(err) { 
+      res.status(500).json({ 
+         message: 'Не получилось получить товар'
+      })
+   }
+}
+export const getOneCupCakes = async (req, res)=>{ 
+   try { 
+      const productTitle = req.params.title;
+      ProductModel.findOneAndUpdate(
+         { title: productTitle , parent: "cupcakes"}, 
          { $inc: { vievsCount: 1}},
          {returnDocument : 'after'},
          (err , doc)=>{ 
@@ -106,7 +134,6 @@ export const removeProduct = async (req, res)=>{
    }
 }
 
-
 export const patchProduct = async (req, res)=>{ 
    const productTitle = req.params.title;
 
@@ -118,8 +145,8 @@ export const patchProduct = async (req, res)=>{
          title: req.body.title,
          description: req.body.description, 
          imgUrl: req.body.imgUrl, 
-         price: req.body.price
-
+         price: req.body.price,
+         filling: req.body.filling
       }, 
       (err , doc)=>{ 
          if (err) {
@@ -141,7 +168,9 @@ export const patchProduct = async (req, res)=>{
          }
 }
 
-
+export const getFilterGroup = (req, res)=>{ 
+   res.status(200).json([ 'banana' , 'chokolate' , 'cocos'])
+}
 
 // export const getManyProduct = async (req, res)=>{ 
 //    try { 

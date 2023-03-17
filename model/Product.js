@@ -31,6 +31,10 @@ const ProductSchema = new mongoose.Schema({
       type: Number, 
       default: 0
    },
+   filling: { 
+      type: Array, 
+      defalt: []
+   },
    //есть ли в наличие
    // status: { 
    //    type: Number, 

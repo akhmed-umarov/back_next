@@ -12,9 +12,15 @@ router.get( '/products' ,  ProductController.getAllProducts);
 router.get( '/cakes' , ProductController.getAllCakes);
 router.get( '/cupcakes' , ProductController.getAllCupCakes);
 
+router.get('/filter' , ProductController.getFilterGroup);
 // router.get('/products/:parent' , )   //можно было сделать чтобы по группам доставались данные но там разницы практически никакой
 
-router.get( '/products/:title' , ProductController.getOneProduct)
+// router.get( '/products/:title' , ProductController.getOneProduct)
+
+//тоже самое просто разные пути для маршрутизации nextJs
+router.get( '/cakes/:title' , ProductController.getOneCakes);
+router.get( '/cupcakes/:title' , ProductController.getOneCupCakes);
+
 
 // router.post( '/products' , zadachaValidatorArray , zadachaValidatorArrayFunction,  ProductController.createZadacha )
 router.post( '/product'  ,  ProductController.createProduct )
